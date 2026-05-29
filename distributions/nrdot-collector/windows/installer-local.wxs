@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+   <Product
+      Name="NRDOT Collector (1.15.1)"
+      Id="*"
+      UpgradeCode="BC8657F8-5174-43F3-A319-88D97945291B"
+      Version="1.15.1"
+      Manufacturer="New Relic"
+      Language="1033">
+
+      <Package
+         InstallerVersion="200"
+         Compressed="yes"
+         Comments="Windows Installer Package"
+         InstallScope="perMachine"/>
+      <Media Id="1" Cabinet="product.cab" EmbedCab="yes"/>
+      <Property Id="ARPHELPLINK" Value="https://support.newrelic.com/s/"/>
+      <Property Id="ARPURLINFOABOUT" Value="https://docs.newrelic.com/docs/opentelemetry/nrdot/nrdot-collector/"/>
+      <Property Id="ARPNOREPAIR" Value="1"/>
+      <Property Id="ARPNOMODIFY" Value="1"/>
+
+      <MajorUpgrade
+         AllowDowngrades="no"
+         AllowSameVersionUpgrades="no"
+         DowngradeErrorMessage="A later version of NRDOT is already installed. Setup will now exit."/>
+
+      <Feature Id="Feature" Level="1">
+         <ComponentRef Id="ApplicationComponent"/>
+      </Feature>
+
+      <Property Id="COLLECTOR_SVC_ARGS"/>
+      <CustomAction
+         Id="SetCollectorSvcArgs"
+         Property="COLLECTOR_SVC_ARGS"
+         Value="--config &quot;[INSTALLDIR]config.yaml&quot;"/>
+      <InstallExecuteSequence>
+         <Custom Action="SetCollectorSvcArgs" Before="InstallFiles">NOT COLLECTOR_SVC_ARGS</Custom>
+      </InstallExecuteSequence>
+
+      <Directory Id="TARGETDIR" Name="SourceDir">
+         <Directory Id="ProgramFiles64Folder">
+            <Directory Id="INSTALLDIR" Name="nrdot-collector">
+               <Component Id="ApplicationComponent" Guid="93B6D7EE-859A-4E0C-8196-4E66D7F77D60">
+                  <File
+                     Id="nrdot_collector.exe"
+                     Name="nrdot-collector.exe"
+                     Source="nrdot-collector.exe"
+                     KeyPath="yes"/>
+                  <File
+                     Id="config.yaml"
+                     Name="config.yaml"
+                     Source="config.yaml"/>
+                  <ServiceInstall
+                     Id="Service"
+                     Name="nrdot-collector"
+                     DisplayName="NRDOT Collector"
+                     Description="New Relic Distribution of OpenTelemetry Collector"
+                     Type="ownProcess"
+                     Vital="yes"
+                     Start="auto"
+                     Account="LocalSystem"
+                     ErrorControl="normal"
+                     Arguments="[COLLECTOR_SVC_ARGS]"
+                     Interactive="no"/>
+                  <ServiceControl
+                     Id="StartStopRemoveService"
+                     Name="nrdot-collector"
+                     Start="install"
+                     Stop="both"
+                     Remove="uninstall"
+                     Wait="yes"/>
+                  <RegistryKey
+                     Root="HKLM"
+                     Key="SYSTEM\CurrentControlSet\Services\EventLog\Application\nrdot-collector">
+                     <RegistryValue
+                        Type="expandable"
+                        Name="EventMessageFile"
+                        Value="%SystemRoot%\System32\EventCreate.exe"/>
+                  </RegistryKey>
+               </Component>
+            </Directory>
+         </Directory>
+      </Directory>
+   </Product>
+</Wix>

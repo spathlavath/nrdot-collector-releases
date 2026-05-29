@@ -1,0 +1,28 @@
+name: "nrdot-collector"
+arch: "arm64"
+platform: "linux"
+version: "1.15.1"
+section: "default"
+priority: "extra"
+maintainer: "New Relic <otelcomm-team@newrelic.com>"
+description: "NRDOT Collector - nrdot-collector"
+vendor: "New Relic"
+homepage: "https://newrelic.com"
+license: "Apache 2.0"
+contents:
+  - src: dist/nrdot-collector_linux_arm64_v8.0/nrdot-collector
+    dst: /usr/bin/nrdot-collector
+    file_info:
+      mode: 0755
+  - src: config.yaml
+    dst: /etc/nrdot-collector/config.yaml
+    type: config
+  - src: nrdot-collector.service
+    dst: /lib/systemd/system/nrdot-collector.service
+  - src: nrdot-collector.conf
+    dst: /etc/nrdot-collector/nrdot-collector.conf
+    type: config
+scripts:
+  preinstall: preinstall.sh
+  postinstall: postinstall.sh
+  preremove: preremove.sh

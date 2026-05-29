@@ -19,8 +19,7 @@ if command -v systemctl >/dev/null 2>&1; then
         sed -i "/User=nrdot-collector/d" /lib/systemd/system/nrdot-collector.service
         sed -i "/Group=nrdot-collector/d" /lib/systemd/system/nrdot-collector.service
     fi
+    systemctl daemon-reload
     systemctl enable nrdot-collector.service
-    if [ -f /etc/nrdot-collector/config.yaml ]; then
-        systemctl start nrdot-collector.service
-    fi
+    systemctl start nrdot-collector.service
 fi

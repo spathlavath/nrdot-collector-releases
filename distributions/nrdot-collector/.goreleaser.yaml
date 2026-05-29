@@ -31,9 +31,20 @@ builds:
     env:
       - CGO_ENABLED=0
       - GOEXPERIMENT=
+    overrides:
+      - goos: linux
+        goarch: amd64
+        flags:
+          - -trimpath
+          - -buildmode=pie
+      - goos: linux
+        goarch: arm64
+        flags:
+          - -trimpath
+          - -buildmode=pie
 archives:
   - id: nrdot-collector
-    ids:
+    builds:
       - nrdot-collector
     name_template: '{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}{{ if .Mips }}_{{ .Mips }}{{ end }}'
     format_overrides:
@@ -69,7 +80,7 @@ nfpms:
         dependencies:
           - /bin/sh
     id: nrdot-collector
-    ids:
+    builds:
       - nrdot-collector
     formats:
       - deb
