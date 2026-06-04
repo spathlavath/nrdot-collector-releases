@@ -68,7 +68,7 @@
                      Start="install"
                      Stop="both"
                      Remove="uninstall"
-                     Wait="yes"/>
+                     Wait="no"/>
                   <RegistryKey
                      Root="HKLM"
                      Key="SYSTEM\CurrentControlSet\Services\EventLog\Application\nrdot-collector">
