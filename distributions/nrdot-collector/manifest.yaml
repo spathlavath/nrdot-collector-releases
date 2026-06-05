@@ -16,9 +16,9 @@ receivers:
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/kubeletstatsreceiver v0.150.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/nginxreceiver v0.150.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/prometheusreceiver v0.150.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/oracledbreceiver v0.0.0-20260604105947-c4f3a13778ce
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/oracledbreceiver v0.0.0-20260605063834-ead77821f4c3
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/rabbitmqreceiver v0.150.0
-  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/sqlserverreceiver v0.0.0-20260604105947-c4f3a13778ce
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/sqlserverreceiver v0.0.0-20260605063834-ead77821f4c3
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/receivercreator v0.150.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/windowseventlogreceiver v0.150.0
 processors:
@@ -58,11 +58,11 @@ providers:
   - gomod: go.opentelemetry.io/collector/confmap/provider/yamlprovider v1.56.0
 # When adding a replace, add a comment before it to document why it's needed and when it can be removed
 replaces:
-  # Why: oracledbreceiver and sqlserverreceiver new metrics/features from newrelic-forks/opentelemetry-collector-contrib pp-release branch (latest commit c4f3a13778ce, 2026-06-04)
+  # Why: oracledbreceiver and sqlserverreceiver new metrics/features from newrelic-forks/opentelemetry-collector-contrib pp-release branch (latest commit ead77821f4c3, 2026-06-05)
   # internal/common and sqlnormalizer are fork-only packages required by oracledbreceiver/sqlserverreceiver
   # When to remove: once the changes are merged upstream and released in a tagged version
-  - github.com/open-telemetry/opentelemetry-collector-contrib/receiver/oracledbreceiver v0.0.0-20260604105947-c4f3a13778ce => github.com/newrelic-forks/opentelemetry-collector-contrib/receiver/oracledbreceiver v0.0.0-20260604105947-c4f3a13778ce
-  - github.com/open-telemetry/opentelemetry-collector-contrib/receiver/sqlserverreceiver v0.0.0-20260604105947-c4f3a13778ce => github.com/newrelic-forks/opentelemetry-collector-contrib/receiver/sqlserverreceiver v0.0.0-20260604105947-c4f3a13778ce
+  - github.com/open-telemetry/opentelemetry-collector-contrib/receiver/oracledbreceiver v0.0.0-20260605063834-ead77821f4c3 => github.com/newrelic-forks/opentelemetry-collector-contrib/receiver/oracledbreceiver v0.0.0-20260605063834-ead77821f4c3
+  - github.com/open-telemetry/opentelemetry-collector-contrib/receiver/sqlserverreceiver v0.0.0-20260605063834-ead77821f4c3 => github.com/newrelic-forks/opentelemetry-collector-contrib/receiver/sqlserverreceiver v0.0.0-20260605063834-ead77821f4c3
   - github.com/open-telemetry/opentelemetry-collector-contrib/internal/common => github.com/newrelic-forks/opentelemetry-collector-contrib/internal/common v0.0.0-20260604092834-b9691e631de9
   - github.com/open-telemetry/opentelemetry-collector-contrib/internal/common/sqlnormalizer => github.com/newrelic-forks/opentelemetry-collector-contrib/internal/common/sqlnormalizer v0.0.0-20260604092834-b9691e631de9
   # Why: Fixes CVE-2026-42151 and CVE-2026-42154
